@@ -1,0 +1,38 @@
+namespace Agro.Shared.Data.Primitives
+{
+    public enum DictionaryType
+    {
+        DicActivityType,
+        DicClientLocationType,
+        DicClientSegment,
+        DicClientType,
+        DicLoanFinancingSource,
+        DicLoanProduct,
+        DicLoanPurpose,
+        DicLoanRepaymentType,
+        DicProduct,
+        DicAgriculturalMachineryPurpose,
+        DicEquipmentPurpose,
+        DicLandPurpose,
+        DicCommercialObjectName,
+        DicCommercialObjectPurpose,
+        DicCommercialObjectType,
+        DicStockType,
+        DicTransportBodyType,
+        DicTransportFuel,
+        DicTransportSteeringWheel,
+        DicTransportType,
+        DicWallMaterial,
+        DicGuaranteeType,
+        DicFileType,
+        DicDocumentType,
+        DicDocClassification,
+        DicClassificationSubtitles,
+        DicWarningClassifications,
+        DicNok,
+        DicFirstDocType,
+        DicPledgeType,
+        DicBank,
+        DicClientCategory
+    }
+}

@@ -1,0 +1,379 @@
+﻿@using Agro.Bpm.Logic.CQRS.ReportDocuments.DTOs
+@model CreditCommitteeMeetingDto
+
+<!DOCTYPE html>    
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+        ПРОТОКОЛ ЗАСЕДАНИЯ КРЕДИТНОГО  КОМИТЕТА АО «КАЗАГРОФИНАНС»
+    </title>
+
+    <link href="~/lib/twitter-bootstrap/css/bootstrap-reboot.min.css" rel="stylesheet" />
+    <link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/lib/twitter-bootstrap/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+            font-size: 14px;
+            background-color: rgba(0,0,0,0);
+        }
+
+        tr {
+            page-break-inside: avoid;
+        }
+
+        .keep-together {
+            page-break-inside: avoid;
+        }
+
+        .break-before {
+            page-break-before: always;
+        }
+
+        .break-after {
+            page-break-after: always;
+        }
+        
+        .header-text {
+            max-width: 250px;
+            text-align: right;
+        }
+
+        .subheader {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="">
+        <section>
+            <h6 class="text-center">
+                ПРОТОКОЛ <br />
+                ЗАСЕДАНИЯ КРЕДИТНОГО КОМИТЕТА <br />
+                филиала АО «КазАгроФинанс» по @Model.Region <br />
+                № <span>@Model.ProtocolNumber</span>
+            </h6>
+            <article class="subheader">
+                <span>@Model.City</span>
+                <span>@Model.LastVotedDate</span>
+            </article>
+            <table class="table table-bordered my-2">
+                <tbody>
+                    <tr>
+                        <td><b>Председательствовал</b></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>@Model.Presided.Position</td>
+                        <td>@Model.Presided.Fullname</td>
+                    </tr>
+                    <tr>
+                        <td><b>Члены Кредитного комитета</b></td>
+                        <td></td>
+                    </tr>
+                    @{
+                        foreach (var member in Model.CreditCommitteeMembers)
+                        {
+                            <tr>
+                                <td>@member.Position</td>
+                                <td>@member.Fullname</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <h6 class="text-center mt-3">
+                РАССМОТРЕНИЕ ВОПРОСА <br />
+                О возможности финансирования @Model.ApplicantName <br />
+                @Model.ApplicantAddress
+            </h6>
+            <p class="m-0"><b>Повестка дня:</b></p>
+            <ol class="m-0">
+                <li>Рассмотрение вопроса о возможности получения в лизинг сельскохозяйственной техники @Model.ApplicantName</li>
+            </ol>
+            <p><b>Докладчик:</b> @Model.Reporter.Position @Model.Reporter.Fullname</p>
+
+            <article>
+                <p><b>Запрашиваемые условия:</b></p>
+                <table class="table table-bordered my-2">
+                    <tbody>
+                        <tr>
+                            <td><b>Кредитный продукт</b></td>
+                            <td>@Model.RequestedConditions.CreditProduct</td>
+                        </tr>
+                        <tr>
+                            <td><b>Предмет лизинга</b></td>
+                            <td>
+                                @foreach (var subject in Model.RequestedConditions.LizingSubject)
+                                {
+                                    <p>@subject</p>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Поставщик</b></td>
+                            <td>
+                                @foreach (var supplier in Model.RequestedConditions.Supplier)
+                                {
+                                    <p>@supplier</p>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Источник финансирования</b></td>
+                            <td>@Model.RequestedConditions.FinanceSource</td>
+                        </tr>
+                        <tr>
+                            <td><b>Стоимость предмета лизинга</b></td>
+                            <td>@Model.RequestedConditions.Sum.ToString("N2") тенге</td>
+                        </tr>
+                        <tr>
+                            <td><b>Авансовый платеж</b></td>
+                            <td>
+                                @foreach (var coFinancing in Model.RequestedConditions.CoFinancing)
+                                {
+                                    <p>@coFinancing</p>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Срок финансирования</b></td>
+                            <td>
+                                @foreach (var period in Model.RequestedConditions.Period)
+                                {
+                                    <p>@period</p>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Ставка вознаграждения</b></td>
+                            <td>@Model.RequestedConditions.Rate</td>
+                        </tr>
+                        <tr>
+                            <td><b>Индексация</b></td>
+                            <td>@Model.RequestedConditions.Indexing</td>
+                        </tr>
+                        <tr>
+                            <td><b>Порядок погашения</b></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><b>Основного долга</b></td>
+                            <td>@Model.RequestedConditions.PrincipalDebtRepaymentProcedure</td>
+                        </tr>
+                        <tr>
+                            <td><b>Вознаграждения</b></td>
+                            <td>@Model.RequestedConditions.RewardsRepaymentProcedure</td>
+                        </tr>
+                        <tr>
+                            <td><b>Пункт поставки</b></td>
+                            <td>@Model.Region</td>
+                        </tr>
+                        <tr>
+                            <td><b>Периодичность мониторинга</b></td>
+                            <td>@Model.RequestedConditions.MonitoringFrequency</td>
+                        </tr>
+                        <tr>
+                            <td><b>Центр прибыли</b></td>
+                            <td>@Model.Region</td>
+                        </tr>
+                        <tr>
+                            <td><b>Страхование</b></td>
+                            <td>@Model.RequestedConditions.Insurance</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </article>
+
+            <article class="my-3">
+                <p class="m-0"><b>- Заключение департамента риск-менеджмента</b> - @(Model.RiskManagementDepartmentConclusion ? "положительное" : "отрицательное")</p>
+                <p class="m-0"><b>- Заключение Правового департамента</b> - @(Model.LegalDepartmentConclusion ? "положительное" : "отрицательное")</p>
+                <p class="m-0"><b>- Заключение Департамента безопасности</b> - @(Model.SecurityDepartmentConclusion ? "положительное" : "отрицательное")</p>
+            </article>
+
+            <article>
+                <p class="m-0"><b>Кредитный комитет АО «КазАгроФинанс» по @Model.Region, РЕШИЛ:</b></p>
+                <ol class="m-0">
+                    <li>Предоставить финансирование @Model.ApplicantName на следующих условиях:</li>
+                </ol>
+                <table class="table table-bordered my-2">
+                    <tbody>
+                        <tr>
+                            <td>1.1</td>
+                            <td><b>Кредитный продукт</b></td>
+                            <td>@Model.ProvidedConditions.CreditProduct</td>
+                        </tr>
+                        <tr>
+                            <td>1.2</td>
+                            <td><b>Предмет лизинга</b></td>
+                            <td>
+                                @foreach (var subject in Model.RequestedConditions.LizingSubject)
+                                {
+                                    <p>@subject</p>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1.3</td>
+                            <td><b>Поставщик</b></td>
+                            <td>
+                                @foreach (var supplier in Model.RequestedConditions.Supplier)
+                                {
+                                    <p>@supplier</p>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1.4</td>
+                            <td><b>Источник финансирования</b></td>
+                            <td>@Model.ProvidedConditions.FinanceSource</td>
+                        </tr>
+                        <tr>
+                            <td>1.5</td>
+                            <td><b>Стоимость предмета лизинга</b></td>
+                            <td>@Model.ProvidedConditions.Sum.ToString("N2") тенге</td>
+                        </tr>
+                        <tr>
+                            <td>1.6</td>
+                            <td><b>Авансовый платеж</b></td>
+                            <td>
+                                @foreach (var coFinancing in Model.RequestedConditions.CoFinancing)
+                                {
+                                    <p>@coFinancing</p>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1.7</td>
+                            <td><b>Срок финансирования</b></td>
+                            <td>
+                                @foreach (var period in Model.RequestedConditions.Period)
+                                {
+                                    <p>@period</p>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1.8</td>
+                            <td><b>Ставка вознаграждения</b></td>
+                            <td>@Model.ProvidedConditions.Rate</td>
+                        </tr>
+                        <tr>
+                            <td>1.9</td>
+                            <td><b>Индексация</b></td>
+                            <td>@Model.ProvidedConditions.Indexing</td>
+                        </tr>
+                        <tr>
+                            <td>1.10</td>
+                            <td><b>Порядок погашения</b></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>1.10.1</td>
+                            <td><b>Основного долга</b></td>
+                            <td>@Model.ProvidedConditions.PrincipalDebtRepaymentProcedure</td>
+                        </tr>
+                        <tr>
+                            <td>1.10.2</td>
+                            <td><b>Вознаграждения</b></td>
+                            <td>@Model.ProvidedConditions.RewardsRepaymentProcedure</td>
+                        </tr>
+                        <tr>
+                            <td>1.11</td>
+                            <td><b>Комиссия за рассмотрение проекта</b></td>
+                            <td>@Model.ProvidedConditions.ProjectReviewCommission</td>
+                        </tr>
+                        <tr>
+                            <td>1.12</td>
+                            <td><b>Пункт поставки</b></td>
+                            <td>@Model.Region</td>
+                        </tr>
+                        <tr>
+                            <td>1.13</td>
+                            <td><b>Периодичность мониторинга</b></td>
+                            <td>@Model.ProvidedConditions.MonitoringFrequency</td>
+                        </tr>
+                        <tr>
+                            <td>1.14</td>
+                            <td><b>Центр прибыли</b></td>
+                            <td>@Model.Region</td>
+                        </tr>
+                        <tr>
+                            <td>1.15</td>
+                            <td><b>Страхование</b></td>
+                            <td>@Model.ProvidedConditions.Insurance</td>
+                        </tr>
+                        <tr>
+                            <td>1.16</td>
+                            <td><b>Особое условие</b></td>
+                            <td>@Model.ProvidedConditions.SpecialCondition</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ol start="2">
+                    <li>
+                        В течение 30 календарных дней с даты заключения договора финансового лизинга направить
+                        в адрес Лизингополучателя требование о перечислении инвестиционных субсидий на расчетный счет АО «КазАгроФинанс»
+                        в течении 5 (пяти) рабочих дней с момента получения инвестиционных субсидий;
+                    </li>
+                    <li>
+                        Ответственность и контроль за исполнением настоящего решения возложить на Директора филиала АО «КазАгроФинанс» по @Model.Region
+                    </li> 
+                </ol>
+            </article>
+
+            <article class="my-3">
+                <p><b>Результаты голосования:</b></p>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td>Члены Кредитного Комитета</td>
+                            <td>ФИО</td>
+                            <td>«ЗА»</td>
+                            <td>«ПРОТИВ»</td>
+                            <td>Примечание</td>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>@Model.Presided.Position</td>
+                        <td>@Model.Presided.Fullname</td>
+                        <td>@(Model.Presided.Decision ? "✔" : "")</td>
+                        <td>@(Model.Presided.Decision ? "" : "✔")</td>
+                        <td>@Model.Presided.Comment</td>
+                    </tr>
+                    @{
+                        foreach (var member in Model.CreditCommitteeMembers)
+                        {
+                            <tr>
+                                <td>@member.Position</td>
+                                <td>@member.Fullname</td>
+                                <td>@(member.Decision ? "✔" : "")</td>
+                                <td>@(member.Decision ? "" : "✔")</td>
+                                <td>@member.Comment</td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </article>
+        </section>
+
+        <section class="my-3">
+            <p>Кредитный администратор Ф.И.О.</p>
+        </section>
+    </div>
+
+    <script>
+        window.JSREPORT_CHROME_PDF_OPTIONS = {
+            marginTop: 50,
+            marginRight: 30,
+            marginBottom: 50,
+            marginLeft: 50
+        }
+    </script>
+</body>
+</html>

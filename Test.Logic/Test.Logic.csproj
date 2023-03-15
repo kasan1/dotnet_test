@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Common\**" />
+    <EmbeddedResource Remove="Common\**" />
+    <None Remove="Common\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.11.3" />
+    <PackageReference Include="Syncfusion.DocIO.Net.Core" Version="18.3.0.48" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CQRS\Dictionary\" />
+    <Folder Include="CQRS\Calculator\" />
+    <Folder Include="CQRS\PaymentSchedule\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Agro.Admin.Logic\Agro.Admin.Logic.csproj" />
+    <ProjectReference Include="..\Agro.Shared.Logic\Agro.Shared.Logic.csproj" />
+  </ItemGroup>
+</Project>
